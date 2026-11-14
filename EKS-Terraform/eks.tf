@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-2"
 }
 
 ############################
@@ -47,7 +47,7 @@ resource "aws_subnet" "public1" {
 
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a"
+  availability_zone       = "us-west-2a"
   map_public_ip_on_launch = true
 }
 
@@ -55,7 +55,7 @@ resource "aws_subnet" "public2" {
 
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-east-1b"
+  availability_zone       = "us-west-2b"
   map_public_ip_on_launch = true
 }
 
@@ -63,14 +63,14 @@ resource "aws_subnet" "private1" {
 
   vpc_id            = aws_vpc.eks_vpc.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = "us-west-2a"
 }
 
 resource "aws_subnet" "private2" {
 
   vpc_id            = aws_vpc.eks_vpc.id
   cidr_block        = "10.0.4.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = "us-west-2b"
 }
 
 ############################
@@ -296,7 +296,7 @@ resource "aws_eks_node_group" "node_group" {
 
 
 resource "aws_instance" "eks" {
-    ami           = "ami-096ef200a877f36af"
+    ami           = "ami-0dac6cd09676c9fb1"
     instance_type = "t2.medium"
     subnet_id     = aws_subnet.public1.id
     vpc_security_group_ids = [aws_security_group.allow_all.id]
