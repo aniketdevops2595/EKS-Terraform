@@ -165,13 +165,14 @@ resource "aws_security_group" "allow_all" {
     Name = "allow-all-sg"
   }
 }
+
 ############################
 # IAM ROLE - CLUSTER
 ############################
 
 resource "aws_iam_role" "cluster_role" {
 
-  name = "eks-cluster-role"
+  name = "naresh-eks-cluster-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -197,7 +198,7 @@ resource "aws_iam_role_policy_attachment" "cluster_policy" {
 
 resource "aws_iam_role" "worker_role" {
 
-  name = "eks-worker-role"
+  name = "naresh-eks-worker-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -294,6 +295,9 @@ resource "aws_eks_node_group" "node_group" {
   }
 }
 
+############################
+# EC2 BASTION
+############################
 
 resource "aws_instance" "eks" {
     ami           = "ami-0dac6cd09676c9fb1"
@@ -304,7 +308,6 @@ resource "aws_instance" "eks" {
       volume_size = "30"
     }
    
-    
     tags = {
         Name = "eks"
     }
@@ -332,8 +335,8 @@ resource "aws_instance" "eks" {
                 eksctl version || true
 
                 EOF
-  
 }
+
 ############################
 # EKS ADDONS
 ############################
@@ -378,10 +381,13 @@ resource "aws_eks_addon" "pod_identity" {
   depends_on = [aws_eks_node_group.node_group]
 }
 
+############################
+# EBS CSI ROLE & ADDON
+############################
 
 resource "aws_iam_role" "ebs_csi_role" {
 
-  name = "AmazonEKS_EBS_CSI_DriverRole"
+  name = "naresh-eks-ebs-csi-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
