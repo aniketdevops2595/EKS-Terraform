@@ -387,7 +387,7 @@ resource "aws_eks_addon" "pod_identity" {
 
 resource "aws_iam_role" "ebs_csi_role" {
 
-  name = "naresh-eks-ebs-csi-role"
+  name = "naresh-eks-ebs-csi-role-ani"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
